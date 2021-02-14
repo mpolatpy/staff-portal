@@ -57,16 +57,19 @@ function App({ currentUser, setCurrentUser }) {
             <SignInForm />
           )
           } />
-          <MiniDrawer>
+
+          {!currentUser ?
+
+          (<Redirect to='/' />) :
+
+          (<MiniDrawer>
             <Route exact path="/users" component={Users}/>
             <Route exact path="/teachers" component={TeachersList} />
             <Route path="/users/registration" component={UserRegistrationPage} />
             <Route path="/home" 
             render={() => (
               <div>
-                {currentUser ?
-                  (<h1>{`You are signed in as ${(currentUser.email)} role: ${currentUser.role} ${currentUser.id}`}</h1>) :
-                  (<Redirect to='/'/>)}
+                  <h1>{`You are signed in as ${(currentUser.email)} role: ${currentUser.role} ${currentUser.id}`}</h1>
               </div>
             ) 
             }
@@ -74,8 +77,15 @@ function App({ currentUser, setCurrentUser }) {
             <Route path="/test">
                 <h1>Test</h1>
             </Route>
-            <Route path="/observation" component={ObservationPage}/>
+            
+            <Route path="/observation" 
+            render={() => 
+              currentUser.isSuperAdmin ?
+              <ObservationPage/> :
+              <Redirect to='/home' />} 
+            />
           </MiniDrawer>
+          )}
         </Switch>
     </div>
   );

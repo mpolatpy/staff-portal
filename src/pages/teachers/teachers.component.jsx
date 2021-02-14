@@ -5,7 +5,9 @@ import { fetchTeachersAsync } from '../../redux/teachers/teachers.actions';
 
 import TeacherTableContainer from './teacher-table.container';
 
-const TeachersList = ({ fetchTeachersAsync }) => {
+const TeachersList = (props) => {
+    const { fetchTeachersAsync } = props;
+    console.log(props);
 
     useEffect(() => {
         fetchTeachersAsync();

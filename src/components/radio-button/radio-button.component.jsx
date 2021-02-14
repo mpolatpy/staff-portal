@@ -26,7 +26,7 @@ export default function CustomRadioButtons({ name, label, value, options, handle
                 {
                     options.map( (option, idx) => ( 
                         <FormControlLabel
-                            // className={classes.radio}
+                            className={classes.radio}
                             key={idx}
                             value={option}
                             control={<Radio color="primary" />}

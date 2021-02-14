@@ -1,6 +1,8 @@
 import React from 'react';
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
+
 import { selectTeacherList, selectTeachersIsLoading } from "../../redux/teachers/teachers.selectors";
 
 import Button from '@material-ui/core/Button';
@@ -8,8 +10,9 @@ import DataTable from '../../components/custom-table/custom-table.component';
 import './teachers-table.styles.css';
 
 
-const TeacherTableContainer = ({ teacherList, isLoading }) => {
+const TeacherTableContainer = ({ teacherList, isLoading, history, match }) => {
     const rows = teacherList;
+    // console.log(teacherList);
     const columns = [
         { field: 'firstName', headerName: 'First name', flex: 1.5 },
         { field: 'lastName', headerName: 'Last name', flex: 1.5 },
@@ -17,7 +20,7 @@ const TeacherTableContainer = ({ teacherList, isLoading }) => {
         { field: 'department', headerName: 'Department', flex: 1.2 },
         { field: 'email', headerName: 'Email', flex: 1.2 },
         { 
-            field: 'details', 
+            field: 'id', 
             headerName: 'See Details', 
             renderCell: () => (
                 <strong>
@@ -54,4 +57,4 @@ const mapStateToProps = createStructuredSelector({
 });
 
 
-export default connect(mapStateToProps)(TeacherTableContainer);
+export default connect(mapStateToProps)(withRouter(TeacherTableContainer));

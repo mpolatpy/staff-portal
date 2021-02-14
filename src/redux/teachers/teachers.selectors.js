@@ -19,3 +19,23 @@ export const selectIsTeachersLoaded = createSelector(
     teachersState => !!teachersState.teachers
 );
 
+export const selectTeacherOptions = createSelector( 
+    [selectTeacherList], 
+    teacherList => teacherList.filter(teacher => teacher.firstName !== null)
+                              .map( teacher => `${teacher.lastName}, ${teacher.firstName}` )
+)
+
+export const selectTeachersObjWithNameKeys = createSelector(
+    [selectTeachers], teachers => {
+        const ids = Object.keys(teachers);
+        const teachersObjWithNameKeys = {};
+
+        ids.forEach( id => { 
+            const teacher = teachers[id];
+            const nameKey = `${teacher.lastName}, ${teacher.firstName}`;
+            teachersObjWithNameKeys[nameKey] = teacher;
+        });
+
+        return teachersObjWithNameKeys;
+    }
+)

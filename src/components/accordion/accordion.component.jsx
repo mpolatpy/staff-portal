@@ -7,7 +7,6 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import CustomRadioButtons from '../radio-button/radio-button.component';
 import ObservationItemTable from '../observation-item-table/observation-item-table.component';
 import StarRating from '../star-rating/star-rating.component';
 
@@ -21,13 +20,6 @@ const useStyles = makeStyles({
         alignItems: 'flex-start'
     }
 });
-
-const options = [
-    'Not Meeting Expectaions',
-    'Partially Meeting Expectaions',
-    'Meeting Expectaions',
-    'Exceeding Expectaions',
-];
 
 export default function CustomAccordion(props) {
     const classes = useStyles();

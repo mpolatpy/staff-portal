@@ -7,7 +7,9 @@ import DatePicker from '../../date-picker/date-picker.component';
 import WithSpinner from '../../with-spinner/with-spinner.component';
 import { 
     selectTeachersIsLoading, 
-    selectTeacherList } from '../../../redux/teachers/teachers.selectors';
+    selectTeacherOptions,
+    selectTeachersObjWithNameKeys
+ } from '../../../redux/teachers/teachers.selectors';
 import { fetchTeachersAsync } from '../../../redux/teachers/teachers.actions';
 import { selectObservationFormDetails } from '../../../redux/observation-form/oservation-form.selectors';
 import { setObservationDetails } from '../../../redux/observation-form/oservation-form.actions';
@@ -19,38 +21,25 @@ const ObservationFormDetails = (props) => {
     const { observationDetails, 
         setObservationFormDetails, 
         fetchTeachersAsync,
-        teacherList        
+        teachers,
+        teacherOptions        
      } = props;
 
-    const [observers, setObservers] = useState(null);
+    const [selectedTeacher, setSelectedTeacher] = useState('');
 
     useEffect(() => { 
-        const getObservers = async () => {
-            try {
-                const response = await fetch('http://localhost:8000/student/list/');
-                const jsonResponse = await response.json()
-                if(response.ok ){
-                    setObservers(jsonResponse);
-                } 
-            } catch(e) {
-                console.log(e.message)
-            }
-        }
-
-        getObservers();
-
-        if (teacherList.length === 0) {
+        if (teacherOptions.length === 0) {
             fetchTeachersAsync();
         } 
-    }, [teacherList])
+        if(observationDetails.teacher){
+            setSelectedTeacher(`${observationDetails.teacher.lastName}, ${observationDetails.teacher.firstName}`)
+        }
+    }, [teacherOptions, observationDetails])
 
-    const teacherOptions = teacherList.filter(teacher => teacher.firstName !== null)
-        .map(
-            teacher => `${teacher.lastName}, ${teacher.firstName}`
-        );
 
     const handleChange = e => {
         const { name, value } = e.target;
+        setSelectedTeacher(value);
         setObservationFormDetails({
             ...observationDetails,
             [name]: value
@@ -64,13 +53,18 @@ const ObservationFormDetails = (props) => {
         });
     };
 
+    const handleteacherSelect = (e) => {
+        const {value} = e.target;
+        setSelectedTeacher(value);
+        setObservationFormDetails({
+            ...observationDetails,
+            teacher: teachers[value]
+        });
+    }
+
 
     return ( 
         <div className={classes.root}>
-        {   
-            observers &&
-            observers.map( observer => <li key={observer.id}>{observer.first_name}</li>)
-        }
             <div className={classes.newDiv} >
                 <div className={classes.form_items}>
                     <DatePicker 
@@ -84,7 +78,7 @@ const ObservationFormDetails = (props) => {
                 <div className={classes.form_items}>
                     <CustomSelect
                         required
-                        variant="outlined"
+                        // variant="outlined"
                         label="Department"
                         name="department"
                         handleSelect={handleChange}
@@ -116,8 +110,8 @@ const ObservationFormDetails = (props) => {
                         required
                         name="teacher"
                         label="Teacher"
-                        handleSelect={handleChange}
-                        value={observationDetails.teacher}
+                        handleSelect={handleteacherSelect}
+                        value={selectedTeacher}
                         options={ teacherOptions }
                     />
                 </div>
@@ -171,7 +165,8 @@ const ObservationFormDetails = (props) => {
 const mapStateToProps = createStructuredSelector({
     observationDetails: selectObservationFormDetails,
     isLoading: selectTeachersIsLoading,
-    teacherList: selectTeacherList
+    teacherOptions: selectTeacherOptions,
+    teachers: selectTeachersObjWithNameKeys,
 });
 
 const mapDispatchToProps = dispatch => ({

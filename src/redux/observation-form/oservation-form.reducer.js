@@ -4,7 +4,7 @@ const INITIAL_STATE = {
     observationDetails: {
         observationDate: null,
         observer: '',
-        teacher:'',
+        teacher:null,
         school:'',
         department: '',
         block: '',

@@ -26,6 +26,11 @@ export const setStandardFour = standardFour => ({
     payload: standardFour
 });
 
+export const setObservationNotes = notes => ({
+    type: ObservationFormActionTypes.SET_OBSERVATION_NOTES,
+    payload: notes
+});
+
 export const resetForm = () => ({
     type: ObservationFormActionTypes.RESET_FORM,
 });

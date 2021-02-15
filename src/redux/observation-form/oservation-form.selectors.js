@@ -22,3 +22,7 @@ export const selectStandardThree = createSelector(
 export const selectStandardFour = createSelector(
     [selectObservationForm], observationForm => observationForm.domainFour
 );
+
+export const selectObservationNotes = createSelector(
+    [selectObservationForm], observationForm => observationForm.observationNotes
+);

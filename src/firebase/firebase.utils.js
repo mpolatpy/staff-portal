@@ -67,6 +67,17 @@ export const addDocumentToFirestore = async (collectionName, docName, data) => {
     }
 }
 
+export const fetchCurrentYear = async (setYear) => {
+    try{
+        firestore.collection('years').where('isActiveYear', '==', true)
+                            .get()
+                            .then(snapshot => snapshot.docs[0].data().schoolYear)
+                            .then(year => (setYear(year)) )
+    } catch(error){
+        console.log(error);
+    }
+};
+
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();
 

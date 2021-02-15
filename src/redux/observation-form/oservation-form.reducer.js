@@ -40,7 +40,8 @@ const INITIAL_STATE = {
         d: '0',
         e: '0',
         f: '0'
-    }
+    },
+    observationNotes: ''
 };
 
 const observationFormReducer = (state=INITIAL_STATE, action) => {
@@ -69,6 +70,11 @@ const observationFormReducer = (state=INITIAL_STATE, action) => {
             return {
                 ...state,
                 domainFour: action.payload
+            };
+        case ObservationFormActionTypes.SET_OBSERVATION_NOTES:
+            return {
+                ...state,
+                observationNotes: action.payload
             };
         case ObservationFormActionTypes.RESET_FORM:
             return INITIAL_STATE;

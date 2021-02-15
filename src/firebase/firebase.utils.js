@@ -58,6 +58,14 @@ export const convertTeacherSnapshotToMap = (teachers) => {
     }, {})
 }
 
+export const addDocumentToFirestore = async (collectionName, docName, data) => {
+    try{
+        await firestore.collection(collectionName).doc(docName).set(data);
+        console.log('Sucessfully Added/Updated')
+    } catch (error){
+        console.log(error)
+    }
+}
 
 export const auth = firebase.auth();
 export const firestore = firebase.firestore();

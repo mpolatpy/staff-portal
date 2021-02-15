@@ -1,7 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { resetForm } from '../../redux/observation-form/oservation-form.actions'; 
+import withAuthorization from '../../components/with-authorization/withAuthorization.component';
 
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -112,8 +115,12 @@ const ObservationPage = ({ resetObservationForm }) => {
     );
 }
 
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser
+});
+
 const mapDispatchToProps = dispatch => ({
     resetObservationForm: () => dispatch(resetForm())
 });
 
-export default connect(null, mapDispatchToProps)(ObservationPage);
+export default connect(mapStateToProps, mapDispatchToProps)(withAuthorization(['admin', 'dci'])(ObservationPage));

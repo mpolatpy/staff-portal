@@ -18,10 +18,10 @@ import {
 import ObservationFormDetails from '../../components/observation-form-components/observation-details/observation-details.component';
 import ObservationStandardComponent from '../../components/observation-form-components/standards/observation-standard.component';
 import { rubric } from '../../components/observation-form-components/observationRubric';
-
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 
 export function getSteps() {
-    return ['Observation Details', 'Standard I', 'Standard II', 'Standard III', 'Standard IV'];
+    return ['Observation Details', 'Standard I', 'Standard II', 'Standard III', 'Standard IV', 'Observavtion Notes'];
 }
 
 function ObservationStep(props) {
@@ -83,6 +83,12 @@ function ObservationStep(props) {
                         domainRdx={standardFour}
                         setDomainRdx={setStandardFour}
                     />
+                </div>
+            );
+        case 5: 
+            return ( 
+                <div>
+                    <TextareaAutosize style={{ width: '80%' }} aria-label="minimum height" rowsMin={8} placeholder="Observation Notes" />  
                 </div>
             );
         default:

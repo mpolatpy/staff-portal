@@ -15,5 +15,9 @@ export const useStyles = makeStyles((theme) => ({
     resetContainer: {
         padding: theme.spacing(3),
     },
+    stepContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+    }
 }));
 

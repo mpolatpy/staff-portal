@@ -14,10 +14,17 @@ const useStyles = makeStyles({
     root: {
         width: '100%',
     },
+    accordion: {
+        boxShadow: 'none',
+    }, 
     accordionHeader: {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start'
+    },
+    accordionSummary: {
+        borderBottom: 'none',
+        boxShadow: '0'
     }
 });
 
@@ -27,8 +34,9 @@ export default function CustomAccordion(props) {
 
     return (
         <div className={classes.root}>
-            <Accordion>
+            <Accordion className={classes.accordion}>
                 <AccordionSummary
+                    className={classes.accordionSummary}
                     expandIcon={<ExpandMoreIcon />}
                     aria-label="Expand"
                     aria-controls="additional-actions1-content"
@@ -51,7 +59,7 @@ export default function CustomAccordion(props) {
                     </div>
                     
                 </AccordionSummary>
-                <AccordionDetails>
+                <AccordionDetails >
                     <ObservationItemTable observationItem={observationItem}/>
                 </AccordionDetails>
             </Accordion>

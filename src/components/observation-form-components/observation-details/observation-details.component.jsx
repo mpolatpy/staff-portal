@@ -39,11 +39,19 @@ const ObservationFormDetails = (props) => {
 
     const handleChange = e => {
         const { name, value } = e.target;
-        setSelectedTeacher(value);
-        setObservationFormDetails({
-            ...observationDetails,
-            [name]: value
-        });
+
+        if (name === 'teacher') {
+            setSelectedTeacher(value);
+            setObservationFormDetails({
+                ...observationDetails,
+                teacher: teachers[value]
+            });
+        } else {
+            setObservationFormDetails({
+                ...observationDetails,
+                [name]: value
+            });
+        }
     };
 
     const handleDateChange = (date) => {
@@ -52,15 +60,6 @@ const ObservationFormDetails = (props) => {
             observationDate: date
         });
     };
-
-    const handleteacherSelect = (e) => {
-        const {value} = e.target;
-        setSelectedTeacher(value);
-        setObservationFormDetails({
-            ...observationDetails,
-            teacher: teachers[value]
-        });
-    }
 
 
     return ( 
@@ -110,7 +109,7 @@ const ObservationFormDetails = (props) => {
                         required
                         name="teacher"
                         label="Teacher"
-                        handleSelect={handleteacherSelect}
+                        handleSelect={handleChange}
                         value={selectedTeacher}
                         options={ teacherOptions }
                     />

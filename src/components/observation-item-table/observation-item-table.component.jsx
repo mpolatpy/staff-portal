@@ -19,7 +19,7 @@ export default function ObservationItemTable({ observationItem }) {
     const classes = useStyles();
 
     return (
-        <TableContainer component={Paper}>
+        <TableContainer component={Paper} elevation={0}>
             <Table className={classes.table} aria-label="simple table">
                 <TableHead>
                     <TableRow>

@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStructuredSelector } from 'reselect'
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 
 import { selectTeacherList, selectTeachersIsLoading } from "../../redux/teachers/teachers.selectors";
 
@@ -23,8 +23,9 @@ const TeacherTableContainer = ({ teacherList, isLoading, history, match }) => {
             field: 'id', 
             headerName: 'See Details', 
             renderCell: () => (
-                <strong>
                     <Button
+                        component={Link}
+                        to={`/users`}
                         // variant="contained"
                         // color="secondary"
                         size="small"
@@ -32,7 +33,6 @@ const TeacherTableContainer = ({ teacherList, isLoading, history, match }) => {
                     >
                         details
                     </Button>
-                </strong>
             ),
             width: 200
         }

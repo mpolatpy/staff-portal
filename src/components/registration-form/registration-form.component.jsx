@@ -24,7 +24,7 @@ const RegistrationForm = (props) => {
                     {staff.submissionMessage.text}
                 </Alert>
             }
-            <Grid item xs={12} sm={6} >
+            <Grid item xs={12} sm={10} >
                 <form className={classes.inputContainer} onSubmit={handleSubmit}>
                     <Typography align="justify" variant="h5" mb={5}><strong>Add New Staff Member</strong></Typography>
                     <TextField
@@ -85,7 +85,17 @@ const RegistrationForm = (props) => {
                         options={schoolOptions}
                         variant="outlined"
                     />
-                    <CustomSelect
+                    <TextField
+                        required
+                        className={classes.textInput}
+                        onChange={handleChange}
+                        value={staff.jobTitle}
+                        type="text"
+                        name="jobTitle"
+                        label="Job Title"
+                        variant="outlined"
+                    />
+                    {/* <CustomSelect
                         required
                         label="Job Title"
                         name="jobTitle"
@@ -93,7 +103,7 @@ const RegistrationForm = (props) => {
                         handleSelect={handleChange}
                         options={jobTitleOptions}
                         variant="outlined"
-                    />
+                    /> */}
                     <CustomSelect
                         required
                         label="Role"
@@ -103,17 +113,18 @@ const RegistrationForm = (props) => {
                         options={roleOptions}
                         variant="outlined"
                     />
-                    <div className={classes.button}>
+                    {/* <div className={classes.button}> */}
                         <Button
                             variant="contained"
                             type="submit"
                             color="primary"
                             size="large"
+                        style={{ minWidth: 270, width: 440}}
                             startIcon={<SaveIcon />}
                         >
                             Save
                     </Button>
-                    </div>
+                    {/* </div> */}
                 </form>
             </Grid>
         </div>

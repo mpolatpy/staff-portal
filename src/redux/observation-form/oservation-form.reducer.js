@@ -3,7 +3,9 @@ import ObservationFormActionTypes from './oservation-form.types';
 const INITIAL_STATE = {
     observationDetails: {
         observationDate: null,
-        observer: '',
+        observationType: '',
+        schoolYear: '',
+        observer: null,
         teacher:null,
         school:'',
         department: '',

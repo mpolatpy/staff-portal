@@ -13,18 +13,31 @@ import {
 import { fetchTeachersAsync } from '../../../redux/teachers/teachers.actions';
 import { selectObservationFormDetails } from '../../../redux/observation-form/oservation-form.selectors';
 import { setObservationDetails } from '../../../redux/observation-form/oservation-form.actions';
+import { selectCurrentUser } from '../../../redux/user/user.selectors';
+import { selectCurrentYear } from '../../../redux/school-year/school-year.selectors';
+
 
 import { useStyles } from './observation-details.styles';
 
 const ObservationFormDetails = (props) => {
     const classes = useStyles();
-    const { observationDetails, 
+    const { observationDetails,
+        currentUser, 
+        currentYear,
         setObservationFormDetails, 
         fetchTeachersAsync,
         teachers,
         teacherOptions        
      } = props;
 
+    useEffect( () => {
+         setObservationFormDetails({
+             ...observationDetails,
+             observer: currentUser,
+             schoolYear: currentYear,
+         });
+    }, []);
+    
     const [selectedTeacher, setSelectedTeacher] = useState('');
 
     useEffect(() => { 
@@ -34,7 +47,8 @@ const ObservationFormDetails = (props) => {
         if(observationDetails.teacher){
             setSelectedTeacher(`${observationDetails.teacher.lastName}, ${observationDetails.teacher.firstName}`)
         }
-    }, [teacherOptions, observationDetails])
+
+    }, [teacherOptions, observationDetails, setObservationFormDetails, currentUser])
 
 
     const handleChange = e => {
@@ -72,6 +86,22 @@ const ObservationFormDetails = (props) => {
                         name="observationDate" 
                         label="Observation Date" 
                         variant="outlined"
+                    />
+                </div>
+                <div className={classes.form_items}>
+                    <CustomSelect
+                        required
+                        label="Observation Type"
+                        name="observationType"
+                        handleSelect={handleChange}
+                        value={observationDetails.observationType}
+                        options={[
+                            'Weekly Observation',
+                            'Full Class Observation',
+                            'Quarter Evaluation',
+                            'Midyear Evaluation',
+                            'End of Year Evaluation'
+                        ]}
                     />
                 </div>
                 <div className={classes.form_items}>
@@ -117,11 +147,12 @@ const ObservationFormDetails = (props) => {
                 <div className={classes.form_items}>
                     <CustomSelect
                         required
+                        // disabled
                         name="observer"
                         label="Observer"
-                        handleSelect={handleChange}
-                        value={observationDetails.observer}
-                        options={[1, 2, 3]}
+                        // handleSelect={handleChange}
+                        value={`${currentUser.lastName}, ${currentUser.firstName}`}
+                        options={[`${currentUser.lastName}, ${currentUser.firstName}`]}
                     />
                 </div>
                 <div className={classes.form_items}>
@@ -131,7 +162,7 @@ const ObservationFormDetails = (props) => {
                         label="Block"
                         handleSelect={handleChange}
                         value={observationDetails.block}
-                        options={[1, 2, 3]}
+                        options={[1, 2, 3, 4, 5]}
                     />
                 </div>
                 <div className={classes.form_items}>
@@ -151,7 +182,7 @@ const ObservationFormDetails = (props) => {
                         label="Part of the Class"
                         handleSelect={handleChange}
                         value={observationDetails.partOfTheClass}
-                        options={[1, 2, 3]}
+                        options={["Beginning", "Middle", "End", "Full Class"]}
                     />
                 </div>
             </div>
@@ -166,6 +197,8 @@ const mapStateToProps = createStructuredSelector({
     isLoading: selectTeachersIsLoading,
     teacherOptions: selectTeacherOptions,
     teachers: selectTeachersObjWithNameKeys,
+    currentUser: selectCurrentUser,
+    currentYear: selectCurrentYear,
 });
 
 const mapDispatchToProps = dispatch => ({

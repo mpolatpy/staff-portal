@@ -61,7 +61,11 @@ const ObservationPage = ({ resetObservationForm }) => {
                     <Step key={label}>
                         <StepLabel>{label}</StepLabel>
                         <StepContent>
-                            <form >
+                            <form onSubmit={
+                                index === steps.length - 1 ?
+                                    handleSubmit :
+                                    handleNext
+                            }>
                             <ObservationStep step={index} />
                             <div className={classes.actionsContainer}>
                                 <div>
@@ -76,11 +80,11 @@ const ObservationPage = ({ resetObservationForm }) => {
                                         type="submit"
                                         variant="contained"
                                         color="primary"
-                                        onClick={
-                                            index === steps.length - 1 ? 
-                                            handleSubmit:
-                                            handleNext 
-                                            }
+                                        // onClick={
+                                        //     index === steps.length - 1 ? 
+                                        //     handleSubmit:
+                                        //     handleNext 
+                                        //     }
                                         className={classes.button}
                                     >
                                         {activeStep === steps.length - 1 ? 'Submit' : 'Next'}

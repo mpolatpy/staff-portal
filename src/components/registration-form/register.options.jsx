@@ -17,10 +17,11 @@
                     'District Admin'
                     ],
     roleOptions: [
+                    'teacher',
+                    'schooladmin',
                     'staff',
-                    'admin',
-                    'dci',
-                    'superAdmin'
+                    'DCI',
+                    'superadmin'
                 ]
 };
 

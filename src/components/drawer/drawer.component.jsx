@@ -68,7 +68,9 @@ export default function MiniDrawer({children}) {
                         </Typography>
                         <div className={classes.upperMenuIcons}>
                             <IconButton color="inherit"><NotificationsSharpIcon /></IconButton>
-                            <IconButton color="inherit"><AccountCircleIcon /></IconButton>
+                            <Link to="/profile" className={classes.links}>
+                                <IconButton color="inherit"><AccountCircleIcon /></IconButton>
+                            </Link>
                             <IconButton color="inherit" onClick={() => auth.signOut()}>
                                 <ExitToAppIcon />
                             </IconButton>

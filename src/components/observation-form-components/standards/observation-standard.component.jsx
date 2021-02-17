@@ -12,7 +12,7 @@ const ObservationStandardComponent = ({ domain, domainRdx, setDomainRdx }) => {
 
     const handleStarChange = (event) => {
         const { name, value } = event.target;
-        console.log(name, value);
+
         setDomainRdx({
             ...domainRdx,
             [name]: value

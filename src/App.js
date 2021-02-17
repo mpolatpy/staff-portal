@@ -10,6 +10,7 @@ import { selectCurrentUser } from "./redux/user/user.selectors";
 import { selectCurrentYear } from './redux/school-year/school-year.selectors';
 import { setCurrentYear } from './redux/school-year/school-year.actions';
 import NotFound from './pages/404/not-found.component';
+import ProfilePage from './pages/profile/profile.component';
 
 import Button from '@material-ui/core/Button';
 import SignInForm from './pages/sign-in/sign-in.component';
@@ -45,9 +46,8 @@ function App({ currentUser, setCurrentUser, setCurrentYear, currentYear }) {
       setCurrentUser(userAuth);
     });
 
-    const currentYear = fetchCurrentYear(setCurrentYear);
+    fetchCurrentYear(setCurrentYear);
     
-
     return () => {
       unsubscribeFromAuth();
     }
@@ -76,13 +76,18 @@ function App({ currentUser, setCurrentUser, setCurrentYear, currentYear }) {
               <Route path="/home" 
               render={() => (
                 <div>
-                    <h1>{`You are signed in as ${(currentUser.email)} role: ${currentUser.role} ${currentUser.id}`}</h1>
+                    <h1>{`Hi ${currentUser.firstName}. You are signed in as ${(currentUser.email)}`}</h1>
                     {/* <h2>Current year: {currentYear}</h2> */}
                 </div>
               ) 
               }
               /> 
               <Route path="/observation" component={ObservationPage} />
+              <Route path="/profile" 
+                render={() => ( 
+                  <ProfilePage currentUser={currentUser} />
+                )}
+              />
               <Route component={NotFound}/>
             </Switch>
           </MiniDrawer>

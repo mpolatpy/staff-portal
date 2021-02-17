@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         boxSizing: 'border-box',
         border: '2px solid #ccc',
         borderRadius: '4px',
-        fontSize: '14px',
+        fontSize: '16px',
     }
 }));
 

@@ -2,7 +2,7 @@ import React from 'react';
 
 import CustomCard from '../../components/custom-card/custom-card.component';
 import { makeStyles } from '@material-ui/core/styles';
-import { Typography } from '@material-ui/core';
+import { Divider, Typography } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
     cardContainer: {
@@ -24,7 +24,9 @@ const HomePage = () => {
 
     return (
         <div className={classes.cardContainer}>
-            <div className={classes.card}>
+            <Typography variant="h5">Dashboard</Typography>
+            <Divider/>
+            <di className={classes.card}>
                 <CustomCard
                     imageUrl="https://east.hampdencharter.org/wp-content/uploads/2018/03/sciencelab2-420x420.jpg"
                     title='Observations'
@@ -34,7 +36,6 @@ const HomePage = () => {
                 >
                     {/* <Typography>View observations here</Typography> */}
                 </CustomCard>
-            </div>
             <div className={classes.card}>
                 <CustomCard
                     className={classes.card}

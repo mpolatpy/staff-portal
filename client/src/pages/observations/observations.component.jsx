@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Route } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 import { connect } from 'react-redux';
-
+import { fetchTeachersAsync } from '../../redux/teachers/teachers.actions';
+import { selectIsTeachersLoaded } from '../../redux/teachers/teachers.selectors';
 import { selectCurrentUser } from "../../redux/user/user.selectors";
 
 import ObservationsOverview from './observations-overview.component';
@@ -14,20 +15,35 @@ import WithAuthorization from '../../components/with-authorization/withAuthoriza
 
 
 const Observations = (props) => {
-    const { match, currentUser, ...otherProps } = props;
+    const { match, currentUser, isTeachersLoaded, fetchTeachersAsync, ...otherProps } = props;
+
+    useEffect(() => {
+        if(!isTeachersLoaded){
+            fetchTeachersAsync();
+        }
+    },[]);
+
     return ( 
         <div>
             <Route exact path={match.path} component={ObservationsOverview}/>
             <Route exact path={`${match.path}/submitted`} component={SubmittedObservations} />
             <Route exact path={`${match.path}/new`} component={NewObservationPage}/>
             <Route exact path={`${match.path}/saved`} component={SavedObservations} />
-            <Route exact path={`${match.path}/saved/:observationId`} component={SavedObservationDetail} />
+            <Route exact 
+            path={`${match.path}/saved/:observationId`} 
+            isTeachersLoaded={isTeachersLoaded}
+            component={SavedObservationDetail} />
         </div>
     );
 }
 
 const mapStateToProps = createStructuredSelector({
-    currentUser: selectCurrentUser
+    currentUser: selectCurrentUser,
+    isTeachersLoaded: selectIsTeachersLoaded
 });
 
-export default connect(mapStateToProps)(WithAuthorization(['superadmin', 'dci', 'admin'])(Observations));
+const mapDispatchToProps = dispatch => ({
+    fetchTeachersAsync: () => dispatch(fetchTeachersAsync())
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(WithAuthorization(['superadmin', 'dci', 'admin'])(Observations));

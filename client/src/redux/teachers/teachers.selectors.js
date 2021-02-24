@@ -20,7 +20,7 @@ export const selectTeachersIsLoading = createSelector(
 );
 
 export const selectIsTeachersLoaded = createSelector(
-    [selectTeachersState], teachersState => !!teachersState.teachers
+    [selectTeachers], teachers => !!teachers
 );
 
 export const selectTeacherOptions = createSelector( 

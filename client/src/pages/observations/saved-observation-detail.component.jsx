@@ -6,7 +6,7 @@ import { setObservationForm } from '../../redux/observation-form/oservation-form
 import { resetObservationForm } from '../../redux/observation-form/oservation-form.actions';
 import ObservationPage from '../observation-form/observation-form.component';
 
-const SavedObservationDetail = ({observation, match, setObservationForm, ...otherProps}) => {
+const SavedObservationDetail = ({ observation, match, setObservationForm, ...otherProps}) => {
     
     useEffect(() => {
         setObservationForm(observation);
@@ -14,7 +14,7 @@ const SavedObservationDetail = ({observation, match, setObservationForm, ...othe
     
     return (
         <>
-            <ObservationPage {...otherProps}/>
+            <ObservationPage {...otherProps} />:   
         </>
     );
 }

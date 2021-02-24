@@ -14,7 +14,7 @@ const SavedObservationDetail = ({observation, match, setObservationForm, ...othe
     
     return (
         <>
-            <ObservationPage readOnly {...otherProps}/>
+            <ObservationPage {...otherProps}/>
         </>
     );
 }

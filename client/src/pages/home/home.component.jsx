@@ -13,7 +13,7 @@ const useStyles = makeStyles(theme => ({
         flexWrap: 'wrap'
     },
     card: {
-        minWidth: '400px',
+        minWidth: '300px',
         padding: theme.spacing(2)
     }
 }));

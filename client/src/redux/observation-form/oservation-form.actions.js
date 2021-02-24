@@ -62,9 +62,16 @@ export const submitObservationFormAsync = (observationFormData, collectionName) 
     const isSavedObservation = collectionName === 'savedObservations';
     const { observationDetails, domainOne, domainTwo,
         domainThree, domainFour, observationNotes } = observationFormData;
+    const observerId = observationDetails.observer.id;
+    const teacherId= observationDetails.teacher.id;
+    const {observationDate} = observationDetails;
+
     const newObservationRef = firestore.collection(collectionName).doc();
 
     const observationForm = {
+        observerId: observerId,
+        teacherid: teacherId,
+        observationDate: observationDate,
         firestoreRef: newObservationRef.id,
         isSavedObservation: isSavedObservation,
         submittedAt: new Date(),

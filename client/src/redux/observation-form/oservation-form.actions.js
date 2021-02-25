@@ -1,5 +1,6 @@
 import ObservationFormActionTypes from './oservation-form.types';
 import { firestore } from '../../firebase/firebase.utils';
+// import { calculateObservationScore } from './observation.utils';
 
 export const setObservationForm = observationForm => ({
     type: ObservationFormActionTypes.SET_OBSERVATION_FORM,
@@ -65,7 +66,6 @@ export const submitObservationFormAsync = (observationFormData, collectionName) 
     const observerId = observationDetails.observer.id;
     const teacherId= observationDetails.teacher.id;
     const {observationDate} = observationDetails;
-
     const newObservationRef = firestore.collection(collectionName).doc();
 
     const observationForm = {
@@ -83,21 +83,36 @@ export const submitObservationFormAsync = (observationFormData, collectionName) 
         observationNotes
     };
 
-    return dispatch => {
+    return async dispatch => {
         dispatch(submitObservationFormStart());
-
-        newObservationRef
-            .set(observationForm)
-            .then( () => dispatch(submitObservationFormSuccess()))
-            .then( () => {
-                if(observationFormData.isSavedObservation){
-                    firestore.collection('savedObservations')
-                            .doc(observationFormData.firestoreRef)
-                            .delete()
-                }
-            })
-            .catch( e => dispatch(submitObservationFormFail(e.message)))
+        try{
+            await newObservationRef.set(observationForm);
+            dispatch(submitObservationFormSuccess());
+            if (observationFormData.isSavedObservation) {
+                await firestore.collection('savedObservations')
+                        .doc(observationFormData.firestoreRef)
+                        .delete();
+            }
+        } catch(e) {
+            dispatch(submitObservationFormFail(e.message));
+        }
     }
+
+    // return dispatch => {
+    //     dispatch(submitObservationFormStart());
+
+    //     newObservationRef
+    //         .set(observationForm)
+    //         .then( () => dispatch(submitObservationFormSuccess()))
+    //         .then( () => {
+    //             if(observationFormData.isSavedObservation){
+    //                 firestore.collection('savedObservations')
+    //                         .doc(observationFormData.firestoreRef)
+    //                         .delete()
+    //             }
+    //         })
+    //         .catch( e => dispatch(submitObservationFormFail(e.message)))
+    // }
 }
 
 const deleteObservationFormStart = () => ({

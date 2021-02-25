@@ -31,7 +31,8 @@ const Observations = (props) => {
             <Route exact path={`${match.path}/saved`} component={SavedObservations} />
             <Route exact 
             path={`${match.path}/saved/:observationId`} 
-            isTeachersLoaded={isTeachersLoaded}
+            isLoading={!isTeachersLoaded}
+            fetchTeachersAsync={fetchTeachersAsync}
             component={SavedObservationDetail} />
         </div>
     );

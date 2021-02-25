@@ -5,10 +5,14 @@ import { selectSingleSavedObservation } from '../../redux/saved-observations/sav
 import { setObservationForm } from '../../redux/observation-form/oservation-form.actions';
 import { resetObservationForm } from '../../redux/observation-form/oservation-form.actions';
 import ObservationPage from '../observation-form/observation-form.component';
+import WithSpinner from '../../components/with-spinner/with-spinner.component';
 
-const SavedObservationDetail = ({ observation, match, setObservationForm, ...otherProps}) => {
+const SavedObservationDetail = ({ observation, match, setObservationForm, isLoading, fetchTeachersAsync, ...otherProps}) => {
     
     useEffect(() => {
+        if(isLoading){
+            fetchTeachersAsync();
+        }
         setObservationForm(observation);
     },[observation, setObservationForm]);
     
@@ -28,4 +32,4 @@ const mapDispatchToProps = (dispatch) => ({
     resetObservationForm: (details) => dispatch(resetObservationForm(details)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(SavedObservationDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(WithSpinner(SavedObservationDetail));
